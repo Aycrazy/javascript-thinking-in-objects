@@ -96,9 +96,7 @@ The _model_ is the tier of the app that manages data, its access and storage, th
 
 Our contacts app will model people as objects, and we'll even <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" target="_blank">serialize them to JSON</a> to persit the data on the filesystem.  We'll create a separate module, called _model.js_ to act as the model tier of our simple app.
 
-**TODO 1** : Open the **model.js** file, and create a factory function that initializes a _person_ type of Object.  The Person type of Object will hold all of the properties and behaviours of 
-
-
+**TODO 1** : Open the **model.js** file, and create a factory function that initializes a _person_ type of Object.  The Person type of Object will hold all of the properties and behaviours that represent a person:
 
 ```javascript
 'use-strict';
@@ -120,7 +118,7 @@ function makePerson(firstName, lastName, email, telephone, gender, birthDate, bi
 };
 ```
 
-The `makePerson()` function takes several parameters, `firstName`, `lastName`, etc, that we assign to the properties of the same name of the newly created `_person` object.  We also define a method, a function called `name` that concatenates and returns the `firstName` and `lastName` Strings of the `_person` object; essentially a convenience behaviour of the model, so that everytime we want to display the full name of the person, we don't have to repetitiously, manually concatenate these two values.  
+The `makePerson()` function takes several parameters, `firstName`, `lastName`, etc, that we assign to the properties of the same name of the newly created `_person` object.  We also define a method, a function called `name` that concatenates and returns the `firstName` and `lastName` Strings of the `_person` object; essentially a convenience behaviour of the model, so that every time we want to display the full name of the person, we don't have to repetitively, manually concatenate these two values.  
 
 Note the use of the underscore that prefixes the word person: `_person`.  This is a convention used often to mark properties as `private`, that is, not intended to be visible or used outside of the scope of the current object.  As George mentioned in his post, referenced above:
 
@@ -169,7 +167,13 @@ var me = model.makePerson("Jill", "Williams", "jill@gmail.com", "555-555-5555", 
 console.log(me);
 ```
 
-**Run the App!** : In Cloud9, with the app.js file selected, from the menu bar, click the green _run_ button.  Or, from the Bash prompt, type `./app.js:
+**Run the App!** : In Cloud9, **with the app.js file selected**, from the menu bar, click the green _run_ button, like so:
+
+<img src="https://raw.githubusercontent.com/OperationSpark/using-c9/master/img/run-by-play-btn.png">
+
+Or, from the Bash prompt, select the terminal view so it has the focus, and type `./app.js`, like so:
+
+<img src="https://raw.githubusercontent.com/OperationSpark/using-c9/master/img/run-by-bash.png">
 
     $ ./app.js
     debugger listening on port 15454 
@@ -188,7 +192,7 @@ Note how all of the code for the creation of our person model is encapsulated in
 
 **TODO 6 :**
 
-Now, we need to manage a list of people, our contacts, so, let's lean on a list utility to help us in this regard.  And while were at it, as a nice feature, we want to be able to save our data whenever and for any reason our app quits, so let's wire-in our list's synchronous save method to an exit utility.  To use these utilities, we first need to require them.
+Now, we need to manage a list of people, our contacts, so, let's lean on a list utility to help us in this regard.  And while we're at it, as a nice feature, we want to be able to save our data whenever and for any reason our app quits, so let's wire-in our list's synchronous save method to an exit utility.  To use these utilities, we first need to require them.
 
 At the top of the **app.js** file, add another require statement to import the collections and exit utilities, so that now the require statements look exactly like this:
 
@@ -225,7 +229,7 @@ var people = collections.makeList('people.json', model.makePersonFromJSON);
 ```
 Here we create a list called `people`.
 
-Our collections model exposes a list object that, on top of basic Array functionality, provides an implemenation for serializing, saving, synchronously, saving asynchronously, and loading our data.
+Our collections model exposes a list object that, on top of basic Array functionality, provides an implementation for serializing, saving, synchronously, saving asynchronously, and loading our data.
 
 To use it, the makeList factory method takes a String, the name of the file we want to load from and save to, and a deserialize method - a Function to resuscitate our data from its serialized form, which, given the file extension of .json, will be JSON.
 
@@ -252,7 +256,7 @@ exit.init({
 
 You can <a href="http://nodejs.org/api/process.html#process_signal_events" target="_blank">read more about Node's exit signals here</a>.
 
-Ok, when we now run the app, the program will exit immediately because we're not asking it to wait for anything.  However, before it does, becasue we've added a person to our list, and our exit utility is wired up to the saveSync method of the list, our person data will be saved into a file called _person.json_.
+Ok, when we now run the app, the program will exit immediately because we're not asking it to wait for anything.  However, before it does, because we've added a person to our list, and our exit utility is wired up to the saveSync method of the list, our person data will be saved into a file called _person.json_.
 
 Let's try it out!
 
@@ -285,7 +289,7 @@ Those steps were to merely illustrate using our person model and our people list
 
 Ok, the view in an MVC app is merely responsible for displaying our data, and usually provides some means of interacting with our data.
 
-For the sake of reusablity, we want to separate the rendering of the data from any decisions from interacting with that data. In short, the view just displays stuff, and doesn't care what happens when the user interacts with it.  Our controller will respond to user input, and in doing so, the same view could behave differently if pair with a different controller.  Cool, eh?
+For the sake of reusability, we want to separate the rendering of the data from any decisions from interacting with that data. In short, the view just displays stuff, and doesn't care what happens when the user interacts with it.  Our controller will respond to user input, and in doing so, the same view could behave differently if pair with a different controller.  Cool, eh?
 
 Let's make a very flexible menu that will take a String of menu options to show the user, then dispatch an event with the user's selection.
 
@@ -315,13 +319,13 @@ Before we test out our views, let's do some more coding to get the controller in
 
 #### The Controller
 
-Ok, so, in our little app, again, just to demontrate seperation of concerns, we're going to make us of another module to take care of the logic of loading up our data, preparing that data to show it to our user, and finally responding to user input.
+Ok, so, in our little app, again, just to demonstrate separation of concerns, we're going to make us of another module to take care of the logic of loading up our data, preparing that data to show it to our user, and finally responding to user input.
 
 Open up the **controller.js** file.
 
 Our app should allow us to at least show our list of contacts, add new contacts, and save our list of contacts - and by saving our contacts, we should be able to load them again at runtime!  These are called _requirements_ - the things we need our app to do!
 
-All of the logic to power these requirements, and make our dreams come true, is going to reside in our controller.  Typically speaking, in an MVC app, the controller takes care of preparing data to be displayed to user, that is, formatting our data appropriately for the view, and responding to events off the view, that is, user inpput.
+All of the logic to power these requirements, and make our dreams come true, is going to reside in our controller.  Typically speaking, in an MVC app, the controller takes care of preparing data to be displayed to user, that is, formatting our data appropriately for the view, and responding to events off the view, that is, user input.
 
 The controller is the object in the MVC pattern that knows the most about the other two tiers, the view and the model.  The view and the model don't know anything about each other or even the controller, and this will make more sense once you begin to code within this patterned convention.  For now, consider the controller to be the object in charge of making it all happen - and the other two objects, well, they're essentially dumb.  But, you know, nice and all, just, dumb.
 
@@ -357,7 +361,7 @@ people.load();
 
 **TODO 16 :** Great, let's wire all this together in our **app.js** file:
 
-At the top of the of the **app.js** file, first replace the semi-colon from the end of the require statements with a comma so we can add some more modules in the list.  Then, require the view, prompt and controller modules so your whole require statement looks like this:
+At the top of the of the **app.js** file, first replace the semicolon from the end of the require statements with a comma so we can add some more modules in the list.  Then, require the view, prompt and controller modules so your whole require statement looks like this:
 
 ```javascript
 // TODO 4 : require the model module //
