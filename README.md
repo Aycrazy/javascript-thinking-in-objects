@@ -13,8 +13,13 @@ Create a new Cloud9 workspace for Node.js
         https://github.com/jfraboni/javascript-thinking-in-objects.git
 4. In the environment selection box, select "Node.js".
 5. Finally, click the green button "Create".
+6. When the Cloud9 workspace is finished spooling-up, click the green button, "Start Editing".
+7. One last thing, we have some node packages to install, so when the IDE workspace appears, select the terminal in the bottom pane, and enter the command:
+        npm install
 
-Nice, you're in business...
+<img src="https://raw.githubusercontent.com/OperationSpark/using-c9/master/img/npm-install.png">
+
+After executing the node package manager installation command, you'll see a bunch of installation notes fly by on the command-line while our required code libraries are installed.  Once this processes finishes, you're in business...
 
 #### Thinking in Objects
 
