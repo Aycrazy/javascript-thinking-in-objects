@@ -175,6 +175,8 @@ Or, from the Bash prompt, select the terminal view so it has the focus, and type
 
 <img src="https://raw.githubusercontent.com/OperationSpark/using-c9/master/img/run-by-bash.png">
 
+Fantastic, you should the following output in your terminal
+
     $ ./app.js
     debugger listening on port 15454 
     { firstName: 'Jill', 
